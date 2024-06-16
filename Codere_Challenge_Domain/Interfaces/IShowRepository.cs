@@ -7,5 +7,9 @@ namespace Codere_Challenge_Core.Interfaces
         Task<IEnumerable<Show>> GetAllAsync();
         Task<Show> GetByIdAsync(int id);
         Task AddAsync(Show show);
+        Task AddRangeAsync(List<Show> shows);
+        Task<List<Show>> GetByListOfIdsAsync(List<int> ids);
+        Task UpdateRangeAsync(List<Show> shows);
+        Task<int> GetMaxId();
     }
 }

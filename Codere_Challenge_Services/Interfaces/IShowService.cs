@@ -7,5 +7,7 @@ namespace Codere_Challenge_Services.Interfaces
         Task<IEnumerable<Show>> GetShowsAsync();
         Task<Show> GetShowByIdAsync(int id);
         Task AddShowAsync(Show show);
+        Task<List<Show>> GetShowByListOfIdsAsync(List<int> ids);
+        Task UpdateShowsAsync(List<Show> shows);
     }
 }

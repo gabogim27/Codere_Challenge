@@ -23,7 +23,23 @@ namespace Codere_Challenge_Services.Implementations
             return await _unitOfWork.Shows.GetByIdAsync(id);
         }
 
+        public async Task<List<Show>> GetShowByListOfIdsAsync(List<int> ids)
+        {
+            return await _unitOfWork.Shows.GetByListOfIdsAsync(ids);
+        }
+
         public async Task AddShowAsync(Show show)
+        {
+            await AddToShows(show);
+        }
+
+        public async Task UpdateShowsAsync(List<Show> shows)
+        {
+            await _unitOfWork.Shows.UpdateRangeAsync(shows);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        private async Task AddToShows(Show show)
         {
             await _unitOfWork.Shows.AddAsync(show);
             await _unitOfWork.CompleteAsync();

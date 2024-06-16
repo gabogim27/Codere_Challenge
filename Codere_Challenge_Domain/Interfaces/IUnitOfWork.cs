@@ -3,6 +3,7 @@
     public interface IUnitOfWork : IDisposable
     {
         IShowRepository Shows { get; }
+        IJobExecutionRepository JobExecution { get; }
         Task<int> CompleteAsync();
     }
 }
