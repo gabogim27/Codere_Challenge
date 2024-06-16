@@ -17,7 +17,7 @@ namespace Codere_Challenge_Infrastructure.Repositories
         }
 
         public INetworkRepository Networks => _networks ??= new NetworkRepository(_context);
-        public IShowRepository Shows => _shows ??= new ShowRepository(_context, _networks);
+        public IShowRepository Shows => _shows ??= new ShowRepository(_context);
         public IJobExecutionRepository JobExecution => _jobExecutionRepository ??= new JobExecutionRepository(_context);
 
         public async Task<int> CompleteAsync()

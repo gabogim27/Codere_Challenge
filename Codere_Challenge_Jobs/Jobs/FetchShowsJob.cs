@@ -3,6 +3,7 @@ using Codere_Challenge_Core.Settings;
 using Codere_Challenge_Domain.Entities;
 using Codere_Challenge_Services.Interfaces;
 using Hangfire;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 
@@ -15,9 +16,11 @@ namespace Codere_Challenge_Jobs.Jobs
         private readonly HttpClient _httpClient;
         private readonly IJobStatusService _jobStatusService;
         private readonly IJobExecutionService _jobExecutionService;
+        private readonly ILogger<FetchShowsJob> _logger;
 
-        public FetchShowsJob(IShowService showService, HttpClient httpClient, IOptions<JobSettings> settings, IJobStatusService jobStatusService, IJobExecutionService jobExecutionService)
+        public FetchShowsJob(ILogger<FetchShowsJob> logger, IShowService showService, HttpClient httpClient, IOptions<JobSettings> settings, IJobStatusService jobStatusService, IJobExecutionService jobExecutionService)
         {
+            _logger = logger;
             _showService = showService;
             _httpClient = httpClient;
             _jobSettings = settings.Value;
@@ -59,10 +62,13 @@ namespace Codere_Challenge_Jobs.Jobs
 
                     UpdateJobExecutionStatus(lastIdProcessed.Value-1, JobStatus.FINISHED, currentJobInstance);
                 }
+
+                _logger.LogDebug("Job finished successfully.");
             }
             catch (Exception ex)
             {
                 UpdateJobExecutionStatus(null, JobStatus.FAILED, currentJobInstance);
+                _logger.LogError("An error occured when processing the job. Error: ", ex);
             }
             finally
             {
@@ -146,13 +152,13 @@ namespace Codere_Challenge_Jobs.Jobs
             }
             catch (HttpRequestException ex)
             {
-                //create Exception
-                return null;
+                _logger.LogError($"An error occured when fetching shows from: {_jobSettings.TvMazeApiUrl}. Error: ", ex);
+                throw;
             }
             catch (Exception ex)
             {
-                //create exception
-                return null;
+                _logger.LogError($"An unexpected error occured when fetching shows from: {_jobSettings.TvMazeApiUrl}. Error: ", ex);
+                throw;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Codere_Challenge_Domain.Entities;
+﻿using Codere_Challenge_Core.Filters;
+using Codere_Challenge_Domain.Entities;
 
 namespace Codere_Challenge_Core.Interfaces
 {
@@ -10,6 +11,6 @@ namespace Codere_Challenge_Core.Interfaces
         Task AddRangeAsync(List<Show> shows);
         Task<List<Show>> GetByListOfIdsAsync(List<int> ids);
         Task UpdateRangeAsync(List<Show> shows);
-        Task<int> GetMaxId();
+        Task<IEnumerable<Show>> GetFilteredShowsAsync(ShowFilterRequest filters);
     }
 }

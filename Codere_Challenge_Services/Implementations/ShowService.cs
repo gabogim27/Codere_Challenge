@@ -1,4 +1,5 @@
-﻿using Codere_Challenge_Core.Interfaces;
+﻿using Codere_Challenge_Core.Filters;
+using Codere_Challenge_Core.Interfaces;
 using Codere_Challenge_Domain.Entities;
 using Codere_Challenge_Services.Interfaces;
 
@@ -43,6 +44,11 @@ namespace Codere_Challenge_Services.Implementations
         {
             await _unitOfWork.Shows.AddAsync(show);
             await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task<IEnumerable<Show>> GetFilteredShowsAsync(ShowFilterRequest filters)
+        {
+            return await _unitOfWork.Shows.GetFilteredShowsAsync(filters);
         }
     }
 }

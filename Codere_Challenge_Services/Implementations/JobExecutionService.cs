@@ -18,6 +18,11 @@ namespace Codere_Challenge_Services.Implementations
             return await _unitOfWork.JobExecution.GetByIdAsync(id);
         }
 
+        public async Task<List<JobExecutionStatus>> GetAllAsync()
+        {
+            return await _unitOfWork.JobExecution.GetAllAsync();
+        }
+
         public async Task AddOrUpdateJobStatusAsync(JobExecutionStatus jobStatus)
         {
             var jobExecutionStatus = _unitOfWork.JobExecution.GetByIdAsync(jobStatus.Id);

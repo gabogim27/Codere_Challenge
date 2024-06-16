@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Codere_Challenge_Infrastructure.DI
 {
-    public static class ServiceExtension
+    public static class InfrastructureServiceExtension
     {
-        public static IServiceCollection AddServicesToDI(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServicesToDI(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<TvMazeDbContext>(opts =>
             {
@@ -17,7 +17,9 @@ namespace Codere_Challenge_Infrastructure.DI
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<INetworkRepository, NetworkRepository>();
             services.AddScoped<IShowRepository, ShowRepository>();
+            services.AddScoped<IJobExecutionRepository, JobExecutionRepository>();
 
             return services;
         }

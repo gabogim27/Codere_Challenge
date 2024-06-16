@@ -1,6 +1,7 @@
 ﻿using Codere_Challenge_Core.Entities;
 using Codere_Challenge_Core.Interfaces;
 using Codere_Challenge_Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Codere_Challenge_Infrastructure.Repositories
 {
@@ -16,6 +17,11 @@ namespace Codere_Challenge_Infrastructure.Repositories
         public async Task<JobExecutionStatus> GetByIdAsync(int id)
         {
             return await _context.JobExecutionStatus.FindAsync(id);
+        }
+
+        public async Task<List<JobExecutionStatus>> GetAllAsync()
+        {
+            return await _context.JobExecutionStatus.ToListAsync();
         }
 
         public async Task AddAsync(JobExecutionStatus network)

@@ -1,36 +1,33 @@
 using Codere_Challenge_Jobs.Jobs;
+using Codere_Challenge_Services.Interfaces;
 using Hangfire;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Codere_Challenge_Api.Controllers
 {
     //[Authorize]
     [ApiController]
-    [Route("[controller]")]
-   // [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "ApiKey")]
     public class JobController : ControllerBase
     {
         private readonly ILogger<JobController> _logger;
-        private readonly IConfiguration _configuration;
         private readonly IFetchShowsJob _fetchShowsJob;
         private readonly IJobStatusService _jobStatusService;
+        private readonly IJobExecutionService _jobExecutionService;
 
-        public JobController(ILogger<JobController> logger, IConfiguration configuration, IFetchShowsJob fetchShowsJob, IJobStatusService jobStatusService)
+        public JobController(ILogger<JobController> logger, IFetchShowsJob fetchShowsJob, IJobStatusService jobStatusService, IJobExecutionService jobExecutionService)
         {
             _logger = logger;
-            _configuration = configuration;
             _fetchShowsJob = fetchShowsJob;
             _jobStatusService = jobStatusService;
+            _jobExecutionService = jobExecutionService;
         }
 
         [HttpPost("run-fetch-shows")]
-        public IActionResult RunFetchShowsJob([FromHeader(Name = "x-api-key")] string apiKey)
+        public IActionResult RunFetchShowsJob()
         {
-            //if (apiKey != _configuration["ApiKey"])
-            //{
-            //    return Unauthorized();
-            //}
-
             if (_jobStatusService.IsJobRunning)
             {
                 return StatusCode(StatusCodes.Status409Conflict,
@@ -39,6 +36,12 @@ namespace Codere_Challenge_Api.Controllers
 
             BackgroundJob.Enqueue(() => _fetchShowsJob.ExecuteAsync());
             return Ok("Job has been scheduled to fetch and store shows.");
+        }
+
+        [HttpGet("GetAllExecutions")]
+        public IActionResult GetAllExecutions()
+        {
+            return Ok(_jobExecutionService.GetAllAsync());
         }
     }
 }
