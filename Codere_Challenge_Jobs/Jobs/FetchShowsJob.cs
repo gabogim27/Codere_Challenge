@@ -9,6 +9,9 @@ using System.Text.Json;
 
 namespace Codere_Challenge_Jobs.Jobs
 {
+    /// <summary>
+    /// Job for fetching and storing shows from an external API.
+    /// </summary>
     public class FetchShowsJob : IFetchShowsJob
     {
         private readonly IShowService _showService;
@@ -28,6 +31,10 @@ namespace Codere_Challenge_Jobs.Jobs
             _jobExecutionService = jobExecutionService;
         }
 
+        /// <summary>
+        /// Executes the job to fetch and store shows.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         [DisableConcurrentExecution(timeoutInSeconds: 3600)]
         public async Task ExecuteAsync()
         {
@@ -76,6 +83,12 @@ namespace Codere_Challenge_Jobs.Jobs
             }
         }
 
+        /// <summary>
+        /// Processes the job status based on the last job processed.
+        /// </summary>
+        /// <param name="lastJobProcessed">The last job processed.</param>
+        /// <param name="currentJobInstance">The current job instance.</param>
+        /// <returns>The processed job status.</returns>
         private JobExecutionStatus? ProcessJobStatus(JobExecutionStatus? lastJobProcessed, JobExecutionStatus? currentJobInstance)
         {
             if (lastJobProcessed == null || lastJobProcessed?.JobStatus == JobStatus.FINISHED)
@@ -93,6 +106,12 @@ namespace Codere_Challenge_Jobs.Jobs
             return currentJobInstance;
         }
 
+        /// <summary>
+        /// Adds new shows to the database.
+        /// </summary>
+        /// <param name="showsToPorocess">The shows to process.</param>
+        /// <param name="showsInDatabase">The shows in the database.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         private async Task AddNewShows(List<Show> showsToPorocess, List<Show>? showsInDatabase)
         {
             var showsToInsert = showsToPorocess.Where(x => showsInDatabase != null && showsInDatabase.All(y => y.Id != x.Id)).ToList();
@@ -105,6 +124,11 @@ namespace Codere_Challenge_Jobs.Jobs
             }
         }
 
+        /// <summary>
+        /// Updates existing shows in the database.
+        /// </summary>
+        /// <param name="showsToPorocess">The shows to process.</param>
+        /// <returns>A list of shows in the database.</returns>
         private async Task<List<Show>?> UpdateExistingShows(List<Show> showsToPorocess)
         {
             var showsInDatabase =
@@ -117,6 +141,13 @@ namespace Codere_Challenge_Jobs.Jobs
             return showsInDatabase;
         }
 
+        /// <summary>
+        /// Updates the job execution status.
+        /// </summary>
+        /// <param name="idProcessed">The ID of the last processed show.</param>
+        /// <param name="status">The job status.</param>
+        /// <param name="currentInstance">The current job instance.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         private async void UpdateJobExecutionStatus(int? idProcessed, JobStatus status, JobExecutionStatus currentInstance)
         {
             currentInstance.JobStatus = status;
@@ -125,6 +156,13 @@ namespace Codere_Challenge_Jobs.Jobs
             await _jobExecutionService.AddOrUpdateJobStatusAsync(currentInstance);
         }
 
+        /// <summary>
+        /// Retrieves a page of shows to process.
+        /// </summary>
+        /// <param name="shows">The list of shows.</param>
+        /// <param name="lastIdProcessed">The ID of the last processed show.</param>
+        /// <param name="batchSize">The batch size.</param>
+        /// <returns>A list of shows to process.</returns>
         public List<Show> GetPage(List<Show> shows, int? lastIdProcessed, int batchSize)
         {
             if (lastIdProcessed.HasValue && lastIdProcessed.Value == 0)
@@ -135,6 +173,10 @@ namespace Codere_Challenge_Jobs.Jobs
             return shows.Where(x => x.Id >= lastIdProcessed).Take(batchSize).ToList();
         }
 
+        /// <summary>
+        /// Fetches shows from the external API.
+        /// </summary>
+        /// <returns>A list of shows.</returns>
         private async Task<List<Show>?> FetchShowsAsync()
         {
             try

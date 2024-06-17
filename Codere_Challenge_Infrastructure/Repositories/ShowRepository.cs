@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Codere_Challenge_Infrastructure.Repositories
 {
+    /// <summary>
+    /// Repository for managing show data in the database.
+    /// </summary>
     public class ShowRepository : IShowRepository
     {
         private readonly TvMazeDbContext _context;
@@ -16,27 +19,51 @@ namespace Codere_Challenge_Infrastructure.Repositories
             _context = context;
         }
 
+        /// <summary>
+        /// Gets all shows asynchronously.
+        /// </summary>
+        /// <returns>A list of all shows.</returns>
         public async Task<IEnumerable<Show>> GetAllAsync()
         {
             return await _context.Shows.ToListAsync();
         }
 
+        /// <summary>
+        /// Gets a show by its ID asynchronously.
+        /// </summary>
+        /// <param name="id">The ID of the show.</param>
+        /// <returns>The show with the specified ID.</returns>
         public async Task<Show> GetByIdAsync(int id)
         {
             return await _context.Shows.FindAsync(id);
         }
 
+        /// <summary>
+        /// Gets shows by a list of IDs asynchronously.
+        /// </summary>
+        /// <param name="ids">The list of show IDs.</param>
+        /// <returns>A list of shows with the specified IDs.</returns>
         public async Task<List<Show>> GetByListOfIdsAsync(List<int> ids)
         {
             return await _context.Shows.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
 
+        /// <summary>
+        /// Adds a new show asynchronously.
+        /// </summary>
+        /// <param name="show">The show to add.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task AddAsync(Show show)
         {
             await EnsureNetworkTrackedAsync(show.Network);
             await _context.Shows.AddAsync(show);
         }
 
+        /// <summary>
+        /// Adds a range of new shows asynchronously.
+        /// </summary>
+        /// <param name="shows">The list of shows to add.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task AddRangeAsync(List<Show> shows)
         {
             foreach (var show in shows)
@@ -47,6 +74,11 @@ namespace Codere_Challenge_Infrastructure.Repositories
             await _context.Shows.AddRangeAsync(shows);
         }
 
+        /// <summary>
+        /// Updates a range of existing shows asynchronously.
+        /// </summary>
+        /// <param name="shows">The list of shows to update.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task UpdateRangeAsync(List<Show> shows)
         {
             foreach (var show in shows)
@@ -57,6 +89,11 @@ namespace Codere_Challenge_Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Gets shows that match the specified filters asynchronously.
+        /// </summary>
+        /// <param name="filters">The filters to apply to the shows.</param>
+        /// <returns>A list of shows that match the specified filters.</returns>
         public async Task<IEnumerable<Show>> GetFilteredShowsAsync(ShowFilterRequest filters)
         {
             var query = _context.Shows.Include(s => s.Schedule).Include(s => s.Rating).Include(s => s.Network).ThenInclude(n => n.Country).AsQueryable();
@@ -156,6 +193,11 @@ namespace Codere_Challenge_Infrastructure.Repositories
             return shows;
         }
 
+        /// <summary>
+        /// Ensures the network is tracked by the context.
+        /// </summary>
+        /// <param name="network">The network to track.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         private async Task EnsureNetworkTrackedAsync(Network network)
         {
             if (network != null)

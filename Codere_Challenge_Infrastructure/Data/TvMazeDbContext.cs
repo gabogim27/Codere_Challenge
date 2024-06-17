@@ -18,6 +18,7 @@ namespace Codere_Challenge_Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure Show entity and its properties
             modelBuilder.Entity<Show>(entity =>
             {
                 entity.Property(e => e.Name).IsRequired(false);
@@ -71,6 +72,7 @@ namespace Codere_Challenge_Infrastructure.Data
                 .HasForeignKey("NetworkId")
                 .IsRequired(false);
 
+            // Configure Network entity
             modelBuilder.Entity<Network>().OwnsOne(n => n.Country, country =>
             {
                 country.Property(c => c.Name).IsRequired(false);

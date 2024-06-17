@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Api", "Codere_Challenge_Api\Codere_Challenge_Api.csproj", "{8F401263-E572-47CB-BD11-D99C3A84184D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codere_Challenge_Api", "Codere_Challenge_Api\Codere_Challenge_Api.csproj", "{8F401263-E572-47CB-BD11-D99C3A84184D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Core", "Codere_Challenge_Domain\Codere_Challenge_Core.csproj", "{400D2EBC-B64C-4344-A5DA-B23EA66E7D52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codere_Challenge_Core", "Codere_Challenge_Domain\Codere_Challenge_Core.csproj", "{400D2EBC-B64C-4344-A5DA-B23EA66E7D52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Infrastructure", "Codere_Challenge_Infrastructure\Codere_Challenge_Infrastructure.csproj", "{0F2A6EDA-7C80-4877-8D70-90AA03CC24E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codere_Challenge_Infrastructure", "Codere_Challenge_Infrastructure\Codere_Challenge_Infrastructure.csproj", "{0F2A6EDA-7C80-4877-8D70-90AA03CC24E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Services", "Codere_Challenge_Services\Codere_Challenge_Services.csproj", "{FE52FBD9-DE1E-49A3-93CD-A59B2C379B83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codere_Challenge_Services", "Codere_Challenge_Services\Codere_Challenge_Services.csproj", "{FE52FBD9-DE1E-49A3-93CD-A59B2C379B83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Jobs", "Codere_Challenge_Jobs\Codere_Challenge_Jobs.csproj", "{9B2900C9-288F-402F-A8B0-1C6432BAF179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codere_Challenge_Jobs", "Codere_Challenge_Jobs\Codere_Challenge_Jobs.csproj", "{9B2900C9-288F-402F-A8B0-1C6432BAF179}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Services_Unit_Tests", "Codere_Challenge_Infrastructure_Unit_Tests\Codere_Challenge_Services_Unit_Tests.csproj", "{9AD53F80-C929-4C1A-8D7D-1D7E7322FC6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Jobs_Unit_Tests", "Codere_Challenge_Jobs_Unit_Tests\Codere_Challenge_Jobs_Unit_Tests.csproj", "{1255DB64-65CA-4506-A5DD-1B32BF2AF4B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codere_Challenge_Api_Unit_Tests", "Codere_Challenge_Api_Unit_Tests\Codere_Challenge_Api_Unit_Tests.csproj", "{B511D1BD-3D6E-485D-974C-485168977702}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +45,18 @@ Global
 		{9B2900C9-288F-402F-A8B0-1C6432BAF179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B2900C9-288F-402F-A8B0-1C6432BAF179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B2900C9-288F-402F-A8B0-1C6432BAF179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD53F80-C929-4C1A-8D7D-1D7E7322FC6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD53F80-C929-4C1A-8D7D-1D7E7322FC6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD53F80-C929-4C1A-8D7D-1D7E7322FC6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD53F80-C929-4C1A-8D7D-1D7E7322FC6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1255DB64-65CA-4506-A5DD-1B32BF2AF4B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1255DB64-65CA-4506-A5DD-1B32BF2AF4B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1255DB64-65CA-4506-A5DD-1B32BF2AF4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1255DB64-65CA-4506-A5DD-1B32BF2AF4B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B511D1BD-3D6E-485D-974C-485168977702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B511D1BD-3D6E-485D-974C-485168977702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B511D1BD-3D6E-485D-974C-485168977702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B511D1BD-3D6E-485D-974C-485168977702}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
